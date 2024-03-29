@@ -17,8 +17,9 @@ pipeline {
                 git branch: 'jan2024_emmanuel', credentialsId: 'emmanuel_github_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
            }
+
            stage('list Repo contents') {
-           steps{
+           steps {
                sh 'ls -lrt'
-            }
+           }
            }

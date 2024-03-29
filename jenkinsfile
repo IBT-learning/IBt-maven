@@ -10,7 +10,16 @@ pipeline {
             stage('Hi') {
             steps {
                 echo 'Hello Emmanuel'
+            } //step
+            } //stage2
+            stage('Github download') {
+            steps {
+            git branch: 'jan2024_emmanuel', credentialsId: 'emmanuel_github_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
             }
+            }
+            }
+
+
         }
     }

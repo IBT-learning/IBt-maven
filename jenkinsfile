@@ -20,6 +20,5 @@ pipeline {
            stage ('list Repo contents') {
            steps{
                sh 'ls -lrt'
-               //step
-            } //stage4
-          } // end of stages
+            }
+          }

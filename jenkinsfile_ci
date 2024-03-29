@@ -13,7 +13,7 @@ pipeline {
         }
         stage('List contents'){
             steps{
-                bat 'dir'
+               sh 'ls -lrt'
             }
         }
         stage('validate'){

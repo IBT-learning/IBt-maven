@@ -23,4 +23,3 @@ pipeline {
                //step
             } //stage4
           } // end of stages
-          } // end of pipeline

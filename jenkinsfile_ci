@@ -64,10 +64,10 @@ pipeline {
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
-        stage('upload to artifactory'){
+        stage('deploy'){
             steps{
                withCredentials([file(credentialsId: 'mvn_settings_komivi', variable: 'mvn_settings_komivi')]) {
-                   sh 'mvn deploy -s $mvn_settings_komivi'
+                  sh 'mvn deploy -s $mvn_settings_komivi'
                }
             }
         }

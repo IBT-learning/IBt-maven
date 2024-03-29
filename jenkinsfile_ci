@@ -30,7 +30,7 @@ pipeline {
          }
             steps {
                 withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
-                    sh "${env.sonarScan}/bin/sonar-scanner"
+                    sh '${env.sonarScan}/bin/sonar-scanner'
                 }
             }
         }
@@ -64,7 +64,7 @@ pipeline {
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
-        stage('deploy'){
+        stage('upload to artifactory'){
             steps{
                withCredentials([file(credentialsId: 'mvn_settings_komivi', variable: 'mvn_settings_komivi')]) {
                   sh 'mvn deploy -s $mvn_settings_komivi'

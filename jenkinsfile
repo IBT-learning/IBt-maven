@@ -50,5 +50,5 @@ environment {
                     echo "${env.version}"
                 }
             }
-            } // end of stages
-            } // end of pipeline
+          } // end of stages
+         } // end of pipeline

@@ -30,8 +30,8 @@ pipeline {
           stage ('print commands') {
               steps {
                   echo $CHOICE
-
-
+              }
+          } //stage5
 
          } // end of stages
         } // end of pipeline

@@ -54,6 +54,7 @@ environment {
     }
     stage('using vars'){
         steps{
+            agent { label 'UX-IBT' }
             echo '$version'
             echo "${env.version}"
             script {

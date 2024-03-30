@@ -47,6 +47,9 @@ environment {
             stage('using vars'){
                  steps{
                       echo '$version'
-                      echo "${env.version}"
+                      echo '${env.version}'
                  }
+
             }
+          } // end of stages
+         } // end of pipeline

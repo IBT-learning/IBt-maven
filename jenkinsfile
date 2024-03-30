@@ -44,13 +44,11 @@ environment {
                    echo 'Deploying...'
                }
             }
-            stage('using vars'){
-                 steps{
-                      echo '$version'
-                      echo '${env.version}'
-                 }
-
+            stage('using vars') {
+                steps {
+                    echo "$version"
+                    echo "${env.version}"
+                }
             }
-
-          } // end of stages
-         } // end of pipeline
+            } // end of stages
+            } // end of pipeline

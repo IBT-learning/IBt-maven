@@ -82,7 +82,7 @@ pipeline{
                                         }
                                     }
                               }
-                                                 }
+
                            }// end of stage
     }// end of stages
 }// end of pipeline

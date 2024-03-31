@@ -56,7 +56,6 @@ environment {
                     }
                 }
            }
-
             stage('script block'){
                 steps{
                       script {

@@ -67,4 +67,9 @@ environment {
                 }
             }
           } // end of stages
+          post {
+                   always {
+                       echo 'I will always say hello again'
+                   }
+               }
        } // end of pipeline

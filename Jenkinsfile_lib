@@ -25,11 +25,7 @@ pipeline {
                 }
             }
         }
-        stage('Sonarqube Scan'){
-         steps{
-            sonarScan()
-         }
-        }
+
         stage('compile'){
             steps{
                 withMaven(maven: 'maven_3.8') {
@@ -38,6 +34,11 @@ pipeline {
                 }
             }
         }
+        stage('Sonarqube Scan'){
+                 steps{
+                    sonarScan()
+                 }
+                }
         stage('test'){
             steps {
                 sh 'mvn --version'

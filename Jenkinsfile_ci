@@ -77,7 +77,7 @@ pipeline{
                                                 def userInput = input message: 'Proceed with this step?',
                                                                      ok: 'Submit',
                                                                      parameters: [choice(choices: ['Approve', 'Reject'], name: 'approvalStatus')],
-                                                                     submitter: 'user1,user2' // Comma-separated list of usernames or group names
+                                                                     //submitter: 'user1,user2' // Comma-separated list of usernames or group names
                                                 if (userInput['approvalStatus'] == 'Approve') {
                                                     // Build and deploy logic if approved
                                                      script{

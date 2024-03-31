@@ -73,13 +73,30 @@ pipeline{
                   }// end of stage
          stage('deploy to dev'){
                              steps{
-                                    script{
-                                        def remote= [name: 'dev-server', host: '68.183.32.165', allowAnyHosts: true]
-                                        withCredentials([usernamePassword(credentialsId: 'serveronyia', passwordVariable: 'password', usernameVariable: 'username')]) {
-                                            remote.user= username
-                                            remote.password= password
-                                            sshPut remote: remote, from: 'target/ibt-maven-2.0-SNAPSHOT.jar', into: '/opt/tomcat/apps'
-                                        }
+                                    script {
+                                                def userInput = input message: 'Proceed with this step?',
+                                                                     ok: 'Submit',
+                                                                     parameters: [choice(choices: ['Approve', 'Reject'], name: 'approvalStatus')],
+                                                                     submitter: 'user1,user2' // Comma-separated list of usernames or group names
+                                                if (userInput['approvalStatus'] == 'Approve') {
+                                                    // Build and deploy logic if approved
+                                                     script{
+
+
+                                                                                            def remote= [name: 'dev-server', host: '68.183.32.165', allowAnyHosts: true]
+                                                                                            withCredentials([usernamePassword(credentialsId: 'serveronyia', passwordVariable: 'password', usernameVariable: 'username')]) {
+                                                                                                remote.user= username
+                                                                                                remote.password= password
+                                                                                                sshPut remote: remote, from: 'target/ibt-maven-2.0-SNAPSHOT.jar', into: '/opt/tomcat/apps'
+                                                                                            }
+                                                }
+                                                else {
+                                                    // Handle rejection or cancellation
+                                                    echo 'Build rejected. Aborting...'
+                                                    currentBuild.result = 'ABORTED' // Set build result to aborted
+                                                }
+
+
                                     }
                               }
 

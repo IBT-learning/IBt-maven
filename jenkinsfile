@@ -53,8 +53,9 @@ environment {
                     echo "${env.version}"
                     script {
                         print env.version
+                    }
                 }
-            }
+           }
 
             stage('script block'){
                 steps{
@@ -67,4 +68,4 @@ environment {
                 }
             }
           } // end of stages
-         } // end of pipeline
+       } // end of pipeline

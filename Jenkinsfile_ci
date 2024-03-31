@@ -80,7 +80,7 @@ pipeline{
 
                                                 if (userInput['approvalStatus'] == 'Approve') {
                                                     // Build and deploy logic if approved
-                                                     script{
+
 
 
                                                                                             def remote= [name: 'dev-server', host: '68.183.32.165', allowAnyHosts: true]
@@ -89,7 +89,7 @@ pipeline{
                                                                                                 remote.password= password
                                                                                                 sshPut remote: remote, from: 'target/ibt-maven-2.0-SNAPSHOT.jar', into: '/opt/tomcat/apps'
                                                                                             }
-                                                     }
+
                                                 }
                                                 else {
                                                     // Handle rejection or cancellation

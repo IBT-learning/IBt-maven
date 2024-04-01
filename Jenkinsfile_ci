@@ -72,8 +72,8 @@ pipeline{
                                         }
                   }// end of stage
          stage('deploy to dev'){
-                                                input { message: 'Proceed with this step?',
-                                                        ok: 'Submit',
+                                                input { message 'Proceed with this step?',
+                                                        ok 'Submit',
                                                         parameters{
                                                             choice choices: ['Approve', 'Reject'], name: 'approvalStatus'
                                                         }

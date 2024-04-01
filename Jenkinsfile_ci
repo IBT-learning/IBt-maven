@@ -90,7 +90,7 @@ pipeline{
          }// end of stage
          stage('deploy to Prod'){
                           input {
-                                  message 'Proceed with this step?'
+                                  message 'Approve this step to deploy to production?'
                                   ok 'Submit'
                                   parameters{
                                              choice choices: ['Approve', 'Reject'], name: 'approvalStatus'

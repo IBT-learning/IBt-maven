@@ -62,37 +62,54 @@ pipeline{
                                       --prettyPrint ''', odcInstallation: 'dependency-check'
                                   dependencyCheckPublisher pattern: 'dependency-check-report.xml'
                               }
-                          }
+         }// end of stage
 
          stage('upload artefacts'){
                     steps{
-                     withCredentials([file(credentialsId: 'settings_franklin', variable: 'setings_franklin')]) {
-                         sh 'mvn  deploy -s $setings_franklin'
-                     }
-                                        }
+                            withCredentials([file(credentialsId: 'settings_franklin', variable: 'setings_franklin')]) {
+                             sh 'mvn  deploy -s $setings_franklin'
+                           }
+                    }
+         }// end of stage
+         stage('deploy to Dev'){
+
+                  steps{
+                         script{
+                                  def remote= [name: 'dev-server', host: '68.183.32.165', allowAnyHosts: true]
+                                  withCredentials([usernamePassword(credentialsId: 'serveronyia', passwordVariable: 'password', usernameVariable: 'username')]) {
+                                  remote.user= username
+                                  remote.password= password
+                                  sshPut remote: remote, from: 'target/ibt-maven-2.0-SNAPSHOT.jar', into: '/opt/tomcat/apps'
+                                   }
+                         }
+
+
+
+
+                  }
+         }// end of stage
+         stage('deploy to Prod'){
+                          input {
+                                  message 'Proceed with this step?'
+                                  ok 'Submit'
+                                  parameters{
+                                             choice choices: ['Approve', 'Reject'], name: 'approvalStatus'
+                                  }
+                          }
+                           steps{
+                                  script{
+                                           def remote= [name: 'prod-server', host: '143.110.162.127', allowAnyHosts: true]
+                                           withCredentials([usernamePassword(credentialsId: 'serveronyia', passwordVariable: 'password', usernameVariable: 'username')]) {
+                                           remote.user= username
+                                           remote.password= password
+                                           sshPut remote: remote, from: 'target/ibt-maven-2.0-SNAPSHOT.jar', into: '/opt/tomcat/apps'
+                                            }
+                                  }
+
+
+
+
+                           }
                   }// end of stage
-         stage('deploy to dev'){
-                                                input { message 'Proceed with this step?'
-                                                        ok 'Submit'
-                                                        parameters{
-                                                            choice choices: ['Approve', 'Reject'], name: 'approvalStatus'
-                                                        }
-                                                }
-                                                steps{
-                                                    script{
-                                                                                            def remote= [name: 'dev-server', host: '68.183.32.165', allowAnyHosts: true]
-                                                                                            withCredentials([usernamePassword(credentialsId: 'serveronyia', passwordVariable: 'password', usernameVariable: 'username')]) {
-                                                                                                remote.user= username
-                                                                                                remote.password= password
-                                                                                                sshPut remote: remote, from: 'target/ibt-maven-2.0-SNAPSHOT.jar', into: '/opt/tomcat/apps'
-                                                                                            }
-
-                                                    }
-
-
-
-
-                                                }
-                           }// end of stage
     }// end of stages
 }// end of pipeline

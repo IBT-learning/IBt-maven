@@ -79,10 +79,7 @@ pipeline{
                                                                      parameters: [choice(choices: ['Approve', 'Reject'], name: 'approvalStatus')]
 
                                                 if (userInput['approvalStatus'] == 'Approve') {
-                                                    // Build and deploy logic if approved
-
-
-
+                                                    // Build and deploy logic if approvedd
                                                                                             def remote= [name: 'dev-server', host: '68.183.32.165', allowAnyHosts: true]
                                                                                             withCredentials([usernamePassword(credentialsId: 'serveronyia', passwordVariable: 'password', usernameVariable: 'username')]) {
                                                                                                 remote.user= username
@@ -90,8 +87,7 @@ pipeline{
                                                                                                 sshPut remote: remote, from: 'target/ibt-maven-2.0-SNAPSHOT.jar', into: '/opt/tomcat/apps'
                                                                                             }
 
-                                                }
-                                                else {
+                                                } else {
                                                     // Handle rejection or cancellation
                                                     echo 'Build rejected. Aborting...'
                                                     currentBuild.result = 'ABORTED' // Set build result to aborted

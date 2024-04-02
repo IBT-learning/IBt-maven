@@ -78,7 +78,7 @@ pipeline {
         stage('Deploy to Dev'){
         steps{
             script{
-                    def remote = [name: 'dev', host: '104.236.199.247', allow Any Hosts: 'true']
+                    def remote = [name: 'dev', host: '104.236.199.247', allowAnyHosts: 'true']
                     withCredentials([usernamePassword(credentialsId: 'asulamo', passwordVariable: 'password', usernameVariable: 'username')]) {
                         remote.user = username
                         remote.password = password

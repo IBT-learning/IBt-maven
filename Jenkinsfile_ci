@@ -1,0 +1,28 @@
+pipeline {
+ agent any
+
+ stages{
+    stage ('validate') {
+      steps{
+      sh 'mvn validate'
+
+      echo " Initializing validate"
+
+
+      }
+      stage ('Compile') {
+        steps {
+
+         sh 'mvn compile'
+
+         echo 'Initializing Compile'
+
+        }
+      }
+
+    }
+
+
+ }
+
+}

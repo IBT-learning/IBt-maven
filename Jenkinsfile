@@ -83,10 +83,16 @@ parameters {
 
            }
         }
+        stage('checking git hook') {
+            steps{
+             echo " ran due to git SCM webhook"
+            }
+        }
         post {
                 always {
                     echo 'I will always say Hello again!'
                 }
-    }
+
+      }
     }// end of stages
 //end of pipeline

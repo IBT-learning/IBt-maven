@@ -12,7 +12,7 @@ pipeline {
 
       }
 
-       stage('List Content) {
+       stage('List Content') {
          steps{
             sh 'ls -lrt'
             }

@@ -82,19 +82,21 @@ parameters {
               }
 
            }
-        }
-        stage('checking git webhook') {
-            steps{
-             echo " ran due to git SCM webhook"
+
+           stage('checking git webhook') {
+              steps{
+                 echo " ran due to git SCM webhook"
              }
+
             }
-        }
-        post {
+          }//end of stages
+
+          post {
                 always {
                     echo 'I will always say Hello again!'
                 }
 
       }
-     }
-    }// end of stages
-//end of pipeline
+
+
+    }//end of pipeline

@@ -1,28 +1,24 @@
 pipeline {
- agent any
+    agent any
 
- stages{
-    stage ('validate') {
-      steps{
-      sh 'mvn validate'
+    stages{
 
-      echo " Initializing validate"
+      stage('Github Checkout'){
+        steps{
+           git branch: 'feature-uzoma', changelog: false, credentialsId: 'github_creds_uzoma', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
 
-
-      }
-      stage ('Compile') {
-        steps {
-
-         sh 'mvn compile'
-
-         echo 'Initializing Compile'
 
         }
+
       }
 
-    }
+       stage('List Content) {
+         steps{
+            sh 'ls -lrt'
+
+       }
 
 
- }
+   } // end of stages
 
-}
+} // end of pipeline

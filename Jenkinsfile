@@ -94,6 +94,6 @@ parameters {
                     echo 'I will always say Hello again!'
                 }
 
-      }
+     }
     }// end of stages
 //end of pipeline

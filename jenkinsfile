@@ -26,6 +26,7 @@ environment {
             stage('Github download') {
             steps{
                 git branch: '$Branch_name', credentialsId: 'emmanuel_github_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
+
             }
             } //stage3
             stage ('List Repo contents') {

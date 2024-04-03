@@ -86,6 +86,7 @@ parameters {
         stage('checking git webhook') {
             steps{
              echo " ran due to git SCM webhook"
+             }
             }
         }
         post {

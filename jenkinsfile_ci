@@ -1,11 +1,12 @@
 pipeline
+       {
      agent any
 
       stages{
            stage('Github checkout'){
                 steps{
                      git branch: 'jan2024_emmanuel', credentialsId: 'emmanuel_github_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
-                     checkout scmGit(branches: [[name: '*/jan2024_emmanuel']], extensions: [], userRemoteConfigs: [[credentialsId: 'emmanuel_github_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git']])
+
                 }
            }
            stage('list contents'){
@@ -13,8 +14,6 @@ pipeline
                      sh 'ls -lrt'
                 }
            }
-           stage('validate'){
-                steps{
 
            } // end of stages
 } // end of pipeline

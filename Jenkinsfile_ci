@@ -19,7 +19,14 @@ pipeline {
 
        }
 
-
-   } // end of stages
+       stage('Validate') {
+                steps{
+                   withMaven(maven: 'maven_3.9.3') {
+                       sh 'mvn --version'
+                       sh 'mvn validate'
+                   }
+               }
+       }
+    } // end of stages
 
 } // end of pipeline

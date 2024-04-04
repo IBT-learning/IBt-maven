@@ -55,13 +55,24 @@ pipeline {
                  }
        }
 
-       stage('Deploy') {
-                        steps {
+       stage('Upload to Artifactory') {
+                   steps {
                            withCredentials([file(credentialsId: 'settings_uzoma', variable: 'mvn_settings_uzoma')]) {
                               sh 'mvn deploy -s $mvn_settings_uzoma'
                            }
+                   }
+
+       }
+
+        stage('Upload to Artifactory (config)') {
+                   steps {
+                        configFileProvider([configFile(fileId: 'artifactory-settings', variable: 'mvn_settings_config')]) {
+                           sh 'mvn deploy-s $mvn_settings_config'
                         }
-              }
+
+                   }
+        }
+
 
     } // end of stages
 

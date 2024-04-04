@@ -25,7 +25,7 @@ parameters {
             steps{
                 sh 'ls -lrt'
             }
-        stage("Print command")
+        stage("Print command") {
           steps{
             echo $CHOICE
           }

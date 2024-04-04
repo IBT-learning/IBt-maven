@@ -52,5 +52,12 @@ pipeline
                   }
                }
            }
+           stage('upload to artifactory'){
+               steps{
+                   configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_settings_config', variable: 'mvn_settings_config')]) {
+                          sh 'mvn deploy -s $mvn_settings_emmanuel'
+                   }
+               }
+           }
       } // end of stages
 } // end of pipeline

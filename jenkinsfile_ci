@@ -39,5 +39,6 @@ pipeline
                    sh 'mvn test'
                }
            }
-     } // end of stages
+      }
+    } // end of stages
 } // end of pipeline

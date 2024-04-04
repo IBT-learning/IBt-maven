@@ -25,11 +25,25 @@ parameters {
             steps{
                 sh 'ls -lrt'
             }
+        }
         stage("Print command") {
+            when{
+                expression {
+                   ${params.CHOICE}=='two' 
+                }
+            }
           steps{
-            echo $CHOICE
+            echo '$CHOICE'
+            echo 'choice: ${params.CHOICE}'  
+          }
+        }
+        stage('Example Deploy') {
+            when{
+                branch 'main'
+            }
+          steps{
+            echo 'Deploying...'
           }
         }
     }
-}
 }

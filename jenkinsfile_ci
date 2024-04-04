@@ -83,5 +83,5 @@ steps{
         script{
             def remote = [name: 'dev', 'host: 165.227.209.234', allowAnyHosts: 'true']
             }
-     // end of stages
+       }// end of stages
 } // end of pipeline

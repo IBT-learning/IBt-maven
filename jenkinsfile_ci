@@ -45,5 +45,12 @@ pipeline
                     sh 'mvn package'
                }
            }
+           stage('deploy'){
+               steps{
+                  withCredentials([file(credentialsId: 'mvn_settings_emmanuel', variable: 'mvn_settings_emmanuel')]) {
+                      sh 'mvn deploy -s $mvn_settings_emmanuel'
+                  }
+               }
+           }
       } // end of stages
 } // end of pipeline

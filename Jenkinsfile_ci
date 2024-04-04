@@ -55,6 +55,14 @@ pipeline {
                  }
        }
 
+       stage('Deploy') {
+                        steps {
+                           withCredentials([file(credentialsId: 'settings_uzoma', variable: 'mvn_settings_uzoma')]) {
+                              sh 'mvn deploy -s $mvn_settings_uzoma'
+                           }
+                        }
+              }
+
     } // end of stages
 
 } // end of pipeline

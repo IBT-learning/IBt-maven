@@ -52,10 +52,10 @@ pipeline
                   }
                }
            }
-           stage('upload to artifactory'){
+           stage('upload to artifactory (config)'){
                steps{
                    configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_settings_config', variable: 'mvn_settings_config')]) {
-                          sh 'mvn deploy -s $mvn_settings_emmanuel'
+                        sh 'mvn deploy -s $mvn_settings_config'
                    }
                }
            }

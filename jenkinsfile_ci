@@ -33,12 +33,11 @@ pipeline
                      }
                 }
            }
-           stage('test')
+           stage('test'){
                steps{
                    sh 'mvn --version'
                    sh 'mvn test'
                }
            }
-      }
-    } // end of stages
+      } // end of stages
 } // end of pipeline

@@ -78,7 +78,10 @@ pipeline {
                 }
             }
         }
-
-
-    } // end of stages
+     stage('Deploy to Dev'){
+steps{
+        script{
+            Def remote = [name: 'dev', 'host: 165.227.209.234', allowAnyHost 'true']
+            }
+     // end of stages
 } // end of pipeline

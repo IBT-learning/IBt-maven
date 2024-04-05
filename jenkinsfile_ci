@@ -1,6 +1,7 @@
 pipeline
        {
      agent any
+
      tools{
           maven 'maven_3.9.3'
     }
@@ -26,15 +27,15 @@ pipeline
                 }
            }
            stage('Sonarqube Scan'){
-             environment{
-                sonarScan = tool 'ibt-sonarqube_4.8'
+            environment{
+               sonarScan = tool 'ibt-sonarqube_4.8'
              }
-                steps {
-                     withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
-                          sh "${env.sonarScan}/bin/sonar-scanner"
-                     }
-                }
-             }
+               steps {
+                   withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
+                       sh "${env.sonarScan}/bin/sonar-scanner"
+                   }
+               }
+            }
            stage('compile'){
                 steps{
                      withMaven(maven: 'maven_3.9.3') {

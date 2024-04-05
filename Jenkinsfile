@@ -70,4 +70,9 @@ environment {
         }
         
     }
+    post {
+      always {
+        echo 'I will say Hello again'
+      }
+    }
 }

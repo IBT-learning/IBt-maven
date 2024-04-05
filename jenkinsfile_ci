@@ -66,8 +66,7 @@ pipeline
                    dependencyCheckPublisher  pattern: 'dependency-check-report.xml'
                }
            }
-
-           stage('deploy'){
+           stage('upload to artifactory'){
                steps{
                   withCredentials([file(credentialsId: 'mvn_settings_emmanuel', variable: 'mvn_settings_emmanuel')]) {
                       sh 'mvn deploy -s $mvn_settings_emmanuel'

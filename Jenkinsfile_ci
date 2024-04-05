@@ -3,6 +3,7 @@ pipeline {
 
     tools{
       maven 'maven_3.8'
+      sonarqube  'ibt-sonarqube_5'
     }
 
     stages{
@@ -30,6 +31,14 @@ pipeline {
                        sh 'mvn validate'
                    }
                }
+       }
+
+       stage('Sonarqube Scan') {
+                    steps{
+                      withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
+                          // some block
+                      }
+                    }
        }
 
        stage('Compile') {

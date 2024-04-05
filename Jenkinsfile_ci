@@ -3,7 +3,7 @@ pipeline {
 
     tools{
       maven 'maven_3.8'
-      SonarQube Scanner 'ibt-sonarqube_5'
+     // SonarQube Scanner 'ibt-sonarqube_5'
     }
 
     stages{
@@ -34,9 +34,12 @@ pipeline {
        }
 
        stage('Sonarqube Scan') {
+            environment{
+                 sonarScan = tools 'ibt-sonarqube_5'
+              }
                     steps{
                       withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
-                          // some block
+                         sh "${env.sonarScan}/bin/sonar-scanner"
                       }
                     }
        }

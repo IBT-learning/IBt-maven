@@ -67,6 +67,18 @@ pipeline {
                  }
        }
 
+       stage('Dependency Scan') {
+                   steps {
+                      dependencyCheck additionalArguments: '''
+                                          -o './'
+                                          -s './'
+                                          -f 'ALL'
+                                          --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+
+                              dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+                  }
+       }
+
        stage('Upload to Artifactory') {
                    steps {
                            withCredentials([file(credentialsId: 'settings_uzoma', variable: 'mvn_settings_uzoma')]) {

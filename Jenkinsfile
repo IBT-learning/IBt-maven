@@ -5,6 +5,10 @@ parameters {
   string(name: 'CHOICE', choices: ['one', 'two', 'three'], description: 'pick something')
 }
 
+environment {
+  version = '1.1.1'
+}
+
     stages {
         stage('Hello') {
             steps {
@@ -45,5 +49,12 @@ parameters {
             echo 'Deploying...'
           }
         }
+        stage('using vars') {
+          steps{
+            echo '$version'
+            echo '$(env.verion)'
+          }  
+        }
+        
     }
 }

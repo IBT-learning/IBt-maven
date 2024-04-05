@@ -6,7 +6,7 @@ parameters {
 }
 
 environment {
-  version = '1.1.1'
+  version = '2.39.3'
 }
 
     stages {

@@ -1,0 +1,77 @@
+@Library('jenkins-library')_
+pipeline
+       {
+     agent any
+
+     tools{
+          maven 'maven_3.9.3'
+    }
+
+      stages{
+           stage('Github checkout'){
+                steps{
+                     git branch: 'jan2024_emmanuel', credentialsId: 'emmanuel_github_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
+
+                }
+           }
+           stage('list contents'){
+                steps{
+                     sh 'ls -lrt'
+                }
+           }
+           stage('validate'){
+                steps{
+                     withMaven(maven: 'maven_3.9.3') {
+                         sh 'mvn --version'
+                         sh 'mvn validate'
+                     }
+                }
+           }
+           stage('Sonarqube Scan'){
+               steps{
+                   sonarScan()
+               }
+            }
+           stage('compile'){
+                steps{
+                     withMaven(maven: 'maven_3.9.3') {
+                         sh 'mvn --version'
+                         sh 'mvn compile'
+                     }
+                }
+           }
+           stage('test'){
+               steps{
+                   sh 'mvn --version'
+                   sh 'mvn test'
+               }
+           }
+           stage('package'){
+               steps{
+                    sh 'mvn --version'
+                    sh 'mvn package'
+               }
+           }
+           stage('DependencyScan'){
+               steps{
+                  DependencyCheck()
+               }
+           }
+           stage('upload to artifactory'){
+               steps{
+                  withCredentials([file(credentialsId: 'mvn_settings_emmanuel', variable: 'mvn_settings_emmanuel')]) {
+                      sh 'mvn deploy -s $mvn_settings_emmanuel'
+                  }
+               }
+           }
+           stage('upload to artifactory (config)'){
+               steps{
+                   configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_settings_config', variable: 'mvn_settings_config')]) {
+                        sh 'mvn deploy -s $mvn_settings_config'
+                   }
+               }
+           }
+
+
+      } // end of stages
+} // end of pipeline

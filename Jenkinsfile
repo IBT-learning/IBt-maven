@@ -1,5 +1,6 @@
 pipeline {
-    agent any
+   // agent any
+   agent{ label 'UX-AWS' }
 
 parameters {
     string(name: 'branch_name', defaultValue: 'feature-uzoma', description: 'Enter branch to build')

@@ -25,7 +25,7 @@ environment {
                 git branch: '$branch_name', credentialsId: 'francis_github_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }
-        stage("list repo contents") {
+        stage("List repo contents") {
             steps{
                 sh 'ls -lrt'
             }
@@ -49,7 +49,7 @@ environment {
             echo 'Deploying...'
           }
         }
-        stage('using vars') {
+        stage('Using vars') {
           steps{
             echo '$version'
             echo '$(env.verion)'
@@ -58,7 +58,7 @@ environment {
             }
           }  
         }
-        stage('script block') {
+        stage('Script block') {
           steps{
            script {
                               def browsers = ['chrome', 'firefox']

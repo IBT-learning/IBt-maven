@@ -1,6 +1,6 @@
 pipeline {
-   // agent any
-   agent{ label 'UX-AWS' }
+   agent any
+   //agent{ label 'UX-AWS' } to add node for jenkins build
 
 parameters {
     string(name: 'branch_name', defaultValue: 'feature-uzoma', description: 'Enter branch to build')

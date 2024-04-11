@@ -100,7 +100,7 @@ pipeline {
                   steps {
                          script{
                                 def remote = [name: 'dev', host: '159.223.196.52', allowAnyHosts: 'true']
-                              withCredentials([usernamePassword(credentialsId: 'root_tomcat', passwordVariable: '', usernameVariable: '')]) {
+                              withCredentials([usernamePassword(credentialsId: 'root_tomcat', passwordVariable: 'password', usernameVariable: 'username')]) {
                                 remote.user = username
                                 remote.password = password
                                 sshPut remote: remote, from: 'target/ibt-maven-7.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'

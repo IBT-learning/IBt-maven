@@ -66,8 +66,9 @@ pipeline {
         }
         stage('upload to artifactory'){
             steps{
-               withCredentials([file(credentialsId: 'mvn_settings_gunjan', variable: 'mvn_settings_gunjan')]) {
-                   sh 'mvn deploy -s $mvn_settings_gunjan'
+               withCredentials([file(credentialsId: 'francis_mvn_settings', variable: 'francis_mvn_settings')]) {
+                  sh 'mvn deploy -s $francis_mvn_settings'
+               }
                }
             }
         }

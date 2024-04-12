@@ -52,7 +52,7 @@ environment {
         stage('Using vars') {
           steps{
             echo '$version'
-            echo '$(env.verion)'
+            echo '$(env.version)'
             script {
               print env.version
             }

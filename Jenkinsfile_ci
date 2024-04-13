@@ -1,0 +1,95 @@
+pipeline {
+    agent any
+
+    tools{
+        maven 'maven_3.9.3'
+    }
+
+    stages {
+        stage('Github checkout'){
+            steps{
+                git branch: 'francis-app', changelog: false, credentialsId: 'ibt', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+        }
+        stage('List contents'){
+            steps{
+                sh 'ls -lrt'
+            }
+        }
+        stage('validate'){
+            steps{
+                withMaven(maven: 'maven_3.9.3') {
+                    sh 'mvn --version'
+                    sh 'mvn validate'
+                }
+            }
+        }
+        stage('Sonarqube Scan'){
+         environment{
+            sonarScan = tool 'ibt-sonarqube_4.8'
+         }
+            steps {
+                withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
+                    sh "${env.sonarScan}/bin/sonar-scanner"
+                }
+            }
+        }
+        stage('compile'){
+            steps{
+                withMaven(maven: 'maven_3.8') {
+                    sh 'mvn --version'
+                    sh 'mvn compile'
+                }
+            }
+        }
+        stage('test'){
+            steps {
+                sh 'mvn --version'
+                sh 'mvn test'
+            }
+        }
+        stage('package'){
+            steps {
+                sh 'mvn --version'
+                sh 'mvn package'
+           }
+        }
+        stage('DependencyScan'){
+            steps{
+                dependencyCheck additionalArguments: '''
+                    -o "./"
+                    -s "./"
+                    -f "ALL"
+                    --prettyPrint ''', odcInstallation: 'dependency-check'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
+        stage('upload to artifactory'){
+            steps{
+               withCredentials([file(credentialsId: 'francis_mvn_settings', variable: 'francis_mvn_settings')]) {
+                  sh 'mvn deploy -s $francis_mvn_settings'
+               }
+               }
+            }
+        }
+        stage('upload to artifactory (config)'){
+            steps{
+                configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_settings_config', variable: 'mvn_settings_config')]) {
+                    sh 'mvn deploy -s $mvn_settings_config'
+                }
+            }
+        }
+        stage('Deploy to Dev'){
+            steps{
+                script{
+                    def remote = [name: 'dev', host: '159.203.29.41', allowAnyHosts: 'true']
+                    withCredentials([usernamePassword(credentialsId: 'server-ssh-pw', passwordVariable: 'password', usernameVariable: 'username')]) {
+                        remote.user = username
+                        remote.password = password
+                    sshPut remote: remote, from: 'target/ibt-maven-8.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'
+
+                    }
+                }
+            }
+        }
+    }

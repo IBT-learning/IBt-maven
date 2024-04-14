@@ -30,7 +30,6 @@ pipeline {
              stage("Print commands"){
                 steps {
                    echo ''$CHOICE'
-                   echo "Choice: ${params.CHOICE}"
                 }
              }
          }

@@ -3,6 +3,7 @@ pipeline {
 
      parameters {
         string(name: 'Branch_name', defaultValue: 'main', description: 'Enter branch to build')
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
      }
 
          stages {
@@ -24,6 +25,11 @@ pipeline {
              stage("list repo contents"){
                 steps {
                    bat 'dir'
+                }
+             }
+             stage("Print commands"){
+                steps {
+                   echo $CHOICE
                 }
              }
          }

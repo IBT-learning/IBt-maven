@@ -17,5 +17,10 @@ pipeline {
                    git branch: 'jan2024_obinna', credentialsId: 'bina_github_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
                 }
              }
+             stage("list repo contents"){
+                steps {
+                   bat 'dir'
+                }
+             }
          }
 }

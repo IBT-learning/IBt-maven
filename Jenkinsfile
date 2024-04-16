@@ -27,7 +27,12 @@ pipeline {
                    bat 'dir'
                 }
              }
-             stage("Print commands"){
+             stage("Print commands") {
+                when {
+                expression {
+                ${params.CHOICE}=='Two'
+                }
+             }
                 steps {
                    echo '$CHOICE'
                    echo "Choice: ${params.CHOICE}"

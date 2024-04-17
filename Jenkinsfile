@@ -40,6 +40,9 @@ environment {
                    steps {
                        echo '$CHOICE'
                        echo "Choice: ${params.CHOICE}"
+                       script {
+                           print env.version
+                       }
                 }
              }
              stage('Example Deploy'){
@@ -55,6 +58,16 @@ environment {
                    echo "$version"
                    echo "${env.version}"
                 }
+             }
+             stage('script block'){
+                 steps {
+                    script {
+                                        def browsers = ['chrome', 'firefox']
+                                        for (int i = 0; i < browsers.size(); ++i) {
+                                            echo "Testing the ${browsers[i]} browser"
+                                        }
+
+                 }
              }
          }
 }

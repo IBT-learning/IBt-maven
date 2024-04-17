@@ -28,20 +28,12 @@ pipeline {
                 }
              }
              stage("Print commands") {
-                when {
-                expression {
-                ${params.CHOICE}=='Two'
-                }
-             }
-                steps {
-                   echo '$CHOICE'
-                   echo "Choice: ${params.CHOICE}"
+                   steps {
+                       echo '$CHOICE'
+                       echo "Choice: ${params.CHOICE}"
                 }
              }
              stage('Example Deploy'){
-               when {
-                 branch 'main'
-               }
                 steps {
                    echo "Deploying..."
                 }

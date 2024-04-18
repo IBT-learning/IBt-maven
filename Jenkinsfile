@@ -29,12 +29,12 @@ environment {
              stage("list repo contents"){
                 steps {
                    sh 'ls -lart'
-                }
+                } // bat "dir"
              }
              stage("Print commands") {
                when{
                   expression {
-                      '${params.CHOICE}'=='Two'
+                      "${params.CHOICE}"=="Two"
                   }
                }
                    steps {

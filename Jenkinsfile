@@ -28,7 +28,7 @@ environment {
              }
              stage("list repo contents"){
                 steps {
-                   bat 'dir'
+                   sh 'ls -lart'
                 }
              }
              stage("Print commands") {

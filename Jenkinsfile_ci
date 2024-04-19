@@ -1,0 +1,16 @@
+pipeline {
+     agent any
+
+     stages {
+         stage('Github checkout'){
+            steps{
+              git branch: 'jan2024_obinna', credentialsId: 'obinna_github_cred', url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+         }
+         stage('List contents'){
+            steps{
+               sh 'ls -lart'
+            }
+         }
+     } // end of stages
+} // end of pipeline

@@ -27,17 +27,6 @@ environment {
             git branch: '$Branch_name', credentialsId: 'faomet_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
         }
     } //stage3
-    stage ('Print commands') {
-    when {
-        expression {
-            '${params.CHOICE}'=='Two'
-        }
-    }
-        steps {
-            echo '$Choice'
-            echo "Choice: ${params.Choice}"
-        }
-    } //stage 5
     stage ('Example Deploy'){
       when {
         branch 'jan2024_fao'

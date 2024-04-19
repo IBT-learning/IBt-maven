@@ -3,13 +3,21 @@ pipeline {
 
      stages {
          stage('Github checkout'){
-            steps{
+            steps {
               git branch: 'jan2024_obinna', credentialsId: 'obinna_github_cred', url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
          }
          stage('List contents'){
-            steps{
+            steps {
                sh 'ls -lart'
+            }
+         }
+         stage('validate'){
+            steps {
+               withMaven(maven: 'maven_3.9.3') {
+                   sh 'mvn --version'
+                   sh 'mvn validate'
+               }
             }
          }
      } // end of stages

@@ -11,6 +11,11 @@ pipeline {
             steps{
                 echo "Hi this is fao"
             }
-        } // stage2
+        }
+        stage('Github download') {
+            steps{
+                git branch: 'jan2024_fao', credentialsId: 'fao_met_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+        }
     }
 } // end of pipeline

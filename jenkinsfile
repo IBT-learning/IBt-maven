@@ -30,7 +30,8 @@ environment {
         }
         stage('list repo contents') {
             steps{
-                bat 'dir'
+                // bat 'dir'
+                sh 'ls -lrt'
             }
         }
         stage('Print commands') {

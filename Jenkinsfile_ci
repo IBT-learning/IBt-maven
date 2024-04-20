@@ -52,12 +52,19 @@ pipeline {
                 sh 'mvn package'
             }
         }
-        stage('deploy'){
+        stage('upload to artifactory'){
             steps {
               withCredentials([file(credentialsId: 'kingsley_settings.xml', variable: 'mvn_settings')]) {
                 sh 'mvn deploy -s $mvn_settings'
                 }
            }
+        }
+        stage('upload to artifactory (config)'){
+            steps{
+              configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_settings_config', variable: 'mvn_settings_config')]) {
+                sh 'mvn deploy -s $mvn_settings_config'
+                }
+            }
         }
     } // end of stages
 } // end of pipeline

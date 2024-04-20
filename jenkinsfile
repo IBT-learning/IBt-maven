@@ -2,10 +2,15 @@ pipeline {
     agent any
 
 
+
     parameters {
         string(name: 'branch_name', defaultValue: 'main', description: 'Enter branch to build')
         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
     }
+
+environment {
+    version = '1.1.1'
+}
 
     stages {
         stage('Hello') {
@@ -45,6 +50,12 @@ pipeline {
             }
             steps{
                 echo "Deploying"
+            }
+        }
+        stage('using vars') {
+            steps{
+                echo $version
+                echo '${env.version}'
             }
         }
     }

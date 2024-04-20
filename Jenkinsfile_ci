@@ -16,6 +16,14 @@ pipeline {
                 sh 'ls -lrt'
             }
         }
+        stage('clean'){
+            steps{
+                withMaven(maven: 'maven_3.9.3') {
+                    sh 'mvn --version'
+                    sh 'mvn clean'
+               }
+            }
+        }
         stage('validate'){
             steps{
                 withMaven(maven: 'maven_3.9.3') {
@@ -46,7 +54,7 @@ pipeline {
         }
         stage('deploy'){
             steps {
-              withCredentials([file(credentialsId: 'mvn_kingsley_settings.xml', variable: 'mvn_settings')]) {
+              withCredentials([file(credentialsId: 'kingsley_settings.xml', variable: 'mvn_settings')]) {
                 sh 'mvn deploy -s $mvn_settings'
                 }
            }

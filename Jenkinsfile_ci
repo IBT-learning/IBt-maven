@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+
+
+    stages{
+        stage('Github checkout') {
+            steps{
+                git branch: 'jan2024_fao', changelog: false, credentialsId: 'faoIBT_credentials', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+        }
+        stage('List contents') {
+            steps{
+                sh 'ls -lrt'
+            }
+        }
+
+    }
+
+
+}

@@ -48,6 +48,13 @@ pipeline {
                 sh 'mvn clean'
             }
         }
+        stage('deploy'){
+            steps{
+                withCredentials([file(credentialsId: 'mvn_settings_fao', variable: 'mvn_settings_fao')]) {
+                    sh 'mvn deploy -s $mvn_settings_fao'
+                }
+            }
+        }
 
     }
 

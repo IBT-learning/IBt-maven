@@ -24,6 +24,17 @@ pipeline {
                 }
             }
         }
+        stage('Sonarqube Scan'){
+                 environment{
+                    sonarScan = tool 'ibt-sonarqube'
+                 }
+                    steps{
+                        withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
+                            sh "${env.sonarScan}/bin/sonar-scanner"
+                        }
+                    }
+                 }
+        }
         stage('compile'){
             steps{
                 withMaven(maven: 'maven_3.9.3') {
@@ -41,11 +52,6 @@ pipeline {
                 withMaven(maven: 'maven_3.9.3') {
                     sh 'mvn package'
                 }
-            }
-        }
-        stage('Clean'){
-            steps{
-                sh 'mvn clean'
             }
         }
         stage('upload to artifactory'){

@@ -67,6 +67,18 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Dev'){
+            steps{
+                script{
+                    def remote = [name: 'Dev', host: '128.199.14.45', allowAnyHosts: 'true']
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-agent-connect', passwordVariable: 'root123Admin', usernameVariable: 'root')]) {
+                        remote.user = root
+                        remote.password = root123Admin
+                    sshPut remote: remote, from: 'target/ibt-maven-1.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'
+                    }
+                }
+            }
+        }
 
     }
 

@@ -70,7 +70,7 @@ pipeline {
         stage('Deploy to Dev'){
             steps{
                 script{
-                    def remote = [name: 'Dev', host: '128.199.14.45', allowAnyHosts: 'true']
+                    def remote = [name: 'Dev', host: '64.23.139.228', allowAnyHosts: 'true']
                     withCredentials([usernamePassword(credentialsId: 'jenkins-agent-connect', passwordVariable: 'root123Admin', usernameVariable: 'root')]) {
                         remote.user = root
                         remote.password = root123Admin

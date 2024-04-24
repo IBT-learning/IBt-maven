@@ -84,7 +84,7 @@ pipeline {
                     def remote = [name: 'dev', host: '159.223.200.110', allowAnyHosts: 'true']
                     withCredentials([usernamePassword(credentialsId: 'kingsley_server_credential', passwordVariable: 'password', usernameVariable: 'username')]) {
                         remote.user = username
-                        reemote.password = password
+                        remote.password = password
                     sshPut remote: remote, from: 'target/ibt-maven-8.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'    
 
                    }

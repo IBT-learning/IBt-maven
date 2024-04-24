@@ -75,6 +75,7 @@ pipeline {
                         remote.user = root
                         remote.password = root123Admin
                     sshPut remote: remote, from: 'target/ibt-maven-1.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'
+                    input "Deploy to production? (Click 'Yes' to approve)"
                     }
                 }
             }

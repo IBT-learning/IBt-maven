@@ -1,0 +1,86 @@
+pipeline {
+    agent any
+
+
+
+    parameters {
+        string(name: 'branch_name', defaultValue: 'main', description: 'Enter branch to build')
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+    }
+
+environment {
+    version = '1.1.1'
+}
+
+    stages {
+        stage('Hello') {
+            steps{
+                echo "hello world"
+            }
+        } // stage1
+        stage('Hi') {
+            steps{
+                echo "Hi this is fao"
+            }
+        }
+        stage('Github download') {
+            steps{
+                git branch: '$branch_name', credentialsId: 'fao_met_credentials', url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+        }
+        stage('list repo contents') {
+            steps{
+                // bat 'dir'
+                sh 'ls -lrt'
+            }
+        }
+        stage('Print commands') {
+            when{
+                expression{
+                    '${params.CHOICE}'=='Two'
+                }
+            }
+            steps{
+                echo '$CHOICE'
+                echo "Choice: ${params.CHOICE}"
+            }
+        }
+        stage('Example Deploy') {
+            when{
+                branch 'main'
+            }
+            steps{
+                echo "Deploying"
+            }
+        }
+        stage('using vars') {
+            steps{
+                echo '$version'
+                echo '${env.version}'
+                script {
+                    print env.version
+                }
+            }
+        }
+        stage('script block') {
+            steps{
+                script {
+                                    def browsers = ['chrome', 'firefox']
+                                    for (int i = 0; i < browsers.size(); ++i) {
+                                        echo "Testing the ${browsers[i]} browser"
+                                    }
+                }
+            }
+        }
+        stage('checking git hook') {
+            steps{
+                echo 'i ran due to git scm commit hook pull'
+            }
+        }
+    }
+    post {
+            always {
+                echo 'I will always say Hello again!'
+            }
+    }
+} // end of pipeline

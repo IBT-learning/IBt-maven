@@ -1,0 +1,87 @@
+pipeline {
+    agent any
+
+    tools{
+        maven 'maven_3.9.3'
+    }
+
+    stages{
+        stage('Github checkout') {
+            steps{
+                git branch: 'jan2024_fao', changelog: false, credentialsId: 'faoIBT_credentials', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+        }
+        stage('List contents') {
+            steps{
+                sh 'ls -lrt'
+            }
+        }
+        stage('validate') {
+            steps{
+                withMaven(maven: 'maven_3.8') {
+                    sh 'mvn --version'
+                    sh 'mvn validate'
+                }
+            }
+        }
+        stage('compile'){
+            steps{
+                withMaven(maven: 'maven_3.9.3') {
+                    sh 'mvn compile'
+                }
+            }
+        }
+        stage('test'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+        stage('package'){
+            steps{
+                withMaven(maven: 'maven_3.9.3') {
+                    sh 'mvn package'
+                }
+            }
+        }
+        stage('DependencyScan'){
+            steps{
+                dependencyCheck additionalArguments: '''
+                    -o "./"
+                    -s "./"
+                    -f "ALL"
+                    --prettyPrint ''', odcInstallation: 'dependency-check'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
+        stage('upload to artifactory'){
+            steps{
+                withCredentials([file(credentialsId: 'mvn_settings_fao', variable: 'mvn_settings_fao')]) {
+                    sh 'mvn deploy -s $mvn_settings_fao'
+                }
+            }
+        }
+        stage('upload to artifactory using (config)'){
+            steps{
+                configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_settings_config', variable: 'mvn_settings_config')]) {
+                    sh 'mvn deploy -s $mvn_settings_config'
+                }
+            }
+        }
+        stage('Deploy to Dev'){
+            steps{
+                script{
+                    def remote = [name: 'Dev', host: '64.23.139.228', allowAnyHosts: 'true']
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-agent-connect', passwordVariable: 'root123Admin', usernameVariable: 'root')]) {
+                        remote.user = root
+                        remote.password = root123Admin
+                    sshPut remote: remote, from: 'target/ibt-maven-1.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'
+                    input "Deploy to production? (Click 'Yes' to approve)"
+                    }
+                }
+            }
+        }
+
+    }
+
+
+}

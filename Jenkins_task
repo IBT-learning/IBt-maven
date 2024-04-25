@@ -1,7 +1,5 @@
 pipeline {
-    agent ('Dev') {
-
-        }
+    agent { label 'UX-Dev' }
 
     tools{
         maven 'maven_3.9.3'
@@ -96,16 +94,17 @@ pipeline {
                 }
             }
         }
+    } // end of stages
+} // end of pipeline
+pipeline {
+    agent { label 'UX-Prod' }
+
         stage ('Get approval') {
             steps{
                 input "please approve this process"
             }
         }
-    }
-pipeline {
-    agent ('Prod') {
-    
-       }
+
         stage('Deploy to Prod'){
             steps{
                 script{
@@ -118,6 +117,5 @@ pipeline {
                    }
                 }
             }
-        }
     } // end of stages
 } // end of pipeline

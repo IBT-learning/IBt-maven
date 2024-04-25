@@ -1,51 +1,61 @@
 pipeline {
     agent { label 'UX-Dev' }
 
-    tools {
+    tools{
         maven 'maven_3.9.3'
     }
 
     stages {
-        stage('GitHub checkout') {
-            steps {
+        stage ('GitHub checkout') {
+            steps{
                 git branch: 'feature-kingsleyobi', changelog: false, credentialsId: 'Kingsley_GitHub_Credentials', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }
-        stage('List contents') {
-            steps {
+        stage('List contents'){
+            steps{
                 sh 'ls -lrt'
             }
         }
-        stage('validate') {
-            steps {
+        stage('validate'){
+            steps{
                 withMaven(maven: 'maven_3.9.3') {
                     sh 'mvn --version'
                     sh 'mvn validate'
+               }
+            }
+        }
+        stage('Sonarqube Scan'){
+         environment{
+            sonarScan = tool 'ibt-sonarqube_4.8'
+        }
+            steps {
+                withSonarQubeEnv(credentialsId: 'jan2024_kingsley_sonarqube', installationName: 'IBT sonarqube') {
+                    sh "${env.sonarScan}/bin/sonar-scanner"
                 }
             }
         }
-        stage('compile') {
-            steps {
-                withMaven(maven: 'maven_3.8') {
+        stage('compile'){
+            steps{
+                 withMaven(maven: 'maven_3.8') {
                     sh 'mvn --version'
                     sh 'mvn compile'
                 }
             }
         }
-        stage('test') {
-            steps {
+        stage('test'){
+            steps{
                 sh 'mvn --version'
                 sh 'mvn test'
             }
         }
-        stage('package') {
+        stage('package'){
             steps {
                 sh 'mvn --version'
                 sh 'mvn package'
             }
         }
-        stage('DependencyScan') {
-            steps {
+        stage('DependencyScan'){
+            steps{
                 dependencyCheck additionalArguments: '''
                     -o "./"
                     -s "./"
@@ -54,54 +64,37 @@ pipeline {
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
-        stage('upload to artifactory') {
+        stage('upload to artifactory'){
             steps {
-                withCredentials([file(credentialsId: 'kingsley_settings.xml', variable: 'mvn_settings')]) {
-                    sh 'mvn deploy -s $mvn_settings'
+              withCredentials([file(credentialsId: 'kingsley_settings.xml', variable: 'mvn_settings')]) {
+                sh 'mvn deploy -s $mvn_settings'
+                }
+           }
+        }
+        stage ('Get approval') {
+            steps{
+                input "please approve this process"
+            }
+        }
+        stage('upload to artifactory (config)'){
+            steps{
+              configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_settings_config', variable: 'mvn_settings_config')]) {
+                sh 'mvn deploy -s $mvn_settings_config'
                 }
             }
         }
-        stage('upload to artifactory (config)') {
-            steps {
-                configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_settings_config', variable: 'mvn_settings_config')]) {
-                    sh 'mvn deploy -s $mvn_settings_config'
-                }
-            }
-        }
-        stage('Deploy to Dev') {
-            steps {
-                script {
-                    def remote = [name: 'Dev', host: '147.182.203.83', allowAnyHosts: true]
+        stage('Deploy to Dev'){
+            steps{
+                script{
+                    def remote = [name: 'dev', host: '147.182.203.83', allowAnyHosts: 'true']
                     withCredentials([usernamePassword(credentialsId: 'kingsley_server_credential', passwordVariable: 'password', usernameVariable: 'username')]) {
                         remote.user = username
                         remote.password = password
-                        sshPut remote: remote, from: 'target/ibt-maven-8.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'
-                    }
+                    sshPut remote: remote, from: 'target/ibt-maven-8.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'    
+
+                   }
                 }
             }
         }
     } // end of stages
-
-    post {
-        success {
-            stage('Get approval') {
-                steps {
-                    input "please approve this process"
-                }
-            }
-            stage('Deploy to Prod') {
-                agent { label 'UX-Prod' }
-                steps {
-                    script {
-                        def remote = [name: 'Prod', host: '64.23.206.204', allowAnyHosts: true]
-                        withCredentials([usernamePassword(credentialsId: 'kingsley_server_credential', passwordVariable: 'password', usernameVariable: 'username')]) {
-                            remote.user = username
-                            remote.password = password
-                            sshPut remote: remote, from: 'target/ibt-maven-8.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'
-                        }
-                    }
-                }
-            }
-        }
-    }
 } // end of pipeline

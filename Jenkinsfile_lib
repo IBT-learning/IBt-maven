@@ -33,9 +33,14 @@ pipeline {
                 }
             }
         }
-            stage('Sonarqube Scan'){
-            steps{
-                sonarScan()
+        stage('Sonarqube Scan'){
+         environment{
+            sonarScan = tool 'ibt-sonarqube_4.8'
+        }
+            steps {
+                withSonarQubeEnv(credentialsId: 'jan2024_kingsley_sonarqube', installationName: 'IBT sonarqube') {
+                    sh "${env.sonarScan}/bin/sonar-scanner"
+                }
             }
         }
         stage('test'){

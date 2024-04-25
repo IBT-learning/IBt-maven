@@ -1,5 +1,5 @@
 pipeline {
-    agent 'Dev'
+    agent {Dev}
 
     tools{
         maven 'maven_3.9.3'
@@ -99,7 +99,7 @@ pipeline {
                 input "please approve this process"
             }
         }
-    agent 'Prod'
+    agent {Prod}
         stage('Deploy to Prod'){
             steps{
                 script{

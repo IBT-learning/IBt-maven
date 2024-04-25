@@ -50,7 +50,7 @@ pipeline {
                     -o "./"
                     -s "./"
                     -f "ALL"
-                    --prettyPrint ''', dependencyCheckInstallation: 'dependency-check'
+                    --prettyPrint ''', odcInstallation: 'dependency-check'
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
@@ -82,23 +82,24 @@ pipeline {
         }
     } // end of stages
 
-    stage('Get approval') {
-        steps {
-            script {
-                input "please approve this process"
+    post {
+        success {
+            stage('Get approval') {
+                steps {
+                    input "please approve this process"
+                }
             }
-        }
-    }
-
-    stage('Deploy to Prod') {
-        agent { label 'UX-Prod' }
-        steps {
-            script {
-                def remote = [name: 'Prod', host: '64.23.206.204', allowAnyHosts: true]
-                withCredentials([usernamePassword(credentialsId: 'kingsley_server_credential', passwordVariable: 'password', usernameVariable: 'username')]) {
-                    remote.user = username
-                    remote.password = password
-                    sshPut remote: remote, from: 'target/ibt-maven-8.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'
+            stage('Deploy to Prod') {
+                agent { label 'UX-Prod' }
+                steps {
+                    script {
+                        def remote = [name: 'Prod', host: '64.23.206.204', allowAnyHosts: true]
+                        withCredentials([usernamePassword(credentialsId: 'kingsley_server_credential', passwordVariable: 'password', usernameVariable: 'username')]) {
+                            remote.user = username
+                            remote.password = password
+                            sshPut remote: remote, from: 'target/ibt-maven-8.0-SNAPSHOT.jar', into: '/opt/tomcat/webapp'
+                        }
+                    }
                 }
             }
         }

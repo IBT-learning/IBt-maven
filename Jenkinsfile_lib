@@ -25,17 +25,17 @@ pipeline {
                }
             }
         }
-        stage('Sonarqube Scan'){
-            steps{
-                sonarScan()
-            }
-        }
         stage('compile'){
             steps{
                  withMaven(maven: 'maven_3.8') {
                     sh 'mvn --version'
                     sh 'mvn compile'
                 }
+            }
+        }
+            stage('Sonarqube Scan'){
+            steps{
+                sonarScan()
             }
         }
         stage('test'){

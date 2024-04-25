@@ -1,6 +1,5 @@
 pipeline {
-    agent 
-         node('Dev') {
+    agent ('Dev') {
 
         }
 
@@ -102,8 +101,9 @@ pipeline {
                 input "please approve this process"
             }
         }
-    agent 
-       node('Prod') {
+    }
+pipeline {
+    agent ('Prod') {
     
        }
         stage('Deploy to Prod'){

@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-        stage('Deploy to Dev') {
+        stage {
             steps {
                 // Define steps for deploying to Dev environment
             }
@@ -98,9 +98,6 @@ pipeline {
                 }
             }
         }
-    } // end of stages
-} // end of pipeline
-pipeline {
     agent { label 'UX-Prod' }
 
         stage ('Get approval') {

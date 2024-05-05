@@ -23,7 +23,7 @@ pipeline {
                }
             }
          }
-         stage(Sonarqube Scan){
+         stage('Sonarqube Scan'){
            environment{
             sonarScan = tool 'ibt-sonarqube_4.8'
            }

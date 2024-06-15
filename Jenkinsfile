@@ -7,5 +7,11 @@ pipeline {
                 echo 'Hello World'
             }
         }
+        stage('github checkout') {
+            steps {
+                git branch: 'april2024_godson', changelog: false, credentialsId: '8b75227d-608c-453e-acb6-65799e36014e', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
+                sh 'ls -lart'
+            }
+        }
     }
 }

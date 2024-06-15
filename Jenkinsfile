@@ -44,8 +44,14 @@ pipeline {
         stage('DB name'){
             steps{
                 sh 'echo $database_name'
+               // bat 'echo %database_name%' // windows
             }
         }
 
-    }
-}
+    } // stages
+     post {
+            always {
+                echo 'I will always say Hello again!'
+            }
+        }
+} // pipeline

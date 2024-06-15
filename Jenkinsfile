@@ -28,7 +28,7 @@ pipeline {
         stage('run on condition'){
             when {
                 expression{
-                    $Branch_Name=='main'
+                    env.Branch_Name=='main'
                 }
             }
             steps{

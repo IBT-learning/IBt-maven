@@ -20,6 +20,11 @@ pipeline {
                 sh 'ls -lrt' // unix
             }
         }
+        stage('DB connect'){
+            steps{
+                echo '$choose_db'
+            }
+        }
 
     }
 }

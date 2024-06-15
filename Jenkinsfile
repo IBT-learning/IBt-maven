@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    parameters{ string(name: 'Branch_Name', defaultValue: 'main', description: 'ENter the branch name to build')}
 
     stages {
         stage('Hello') {
@@ -19,5 +20,6 @@ pipeline {
                 sh 'ls -lrt' // unix
             }
         }
+
     }
 }

@@ -1,16 +1,22 @@
 pipeline {
     agent any
     parameters{ string(name: 'Branch_Name', defaultValue: 'main', description: 'ENter the branch name to build')}
+    environment{
+        version = '1.5.0',
+        database_name = 'ibt_db'
+    }
 
     stages {
         stage('Hello') {
             steps {
                 echo 'Hello World'
+                echo '${env.version}'
             }
         }
         stage('Hi'){
             steps{
                 echo 'HI'
+                 echo '${env.database_name}'
             }
         }
         stage('Github checkout'){
@@ -33,6 +39,11 @@ pipeline {
             }
             steps{
                 echo 'hey i am on main branch...'
+            }
+        }
+        stage('DB name'){
+            steps{
+                sh 'echo $database_name'
             }
         }
 

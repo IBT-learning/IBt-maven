@@ -25,6 +25,14 @@ pipeline {
                 sh 'echo $choose_db'
             }
         }
+        stage('run on condition'){
+            when {
+                $Branch_Name=='main'
+            }
+            steps{
+                echo 'hey i am on main branch...'
+            }
+        }
 
     }
 }

@@ -22,7 +22,7 @@ pipeline {
         }
         stage('DB connect'){
             steps{
-                echo '$choose_db'
+                sh 'echo $choose_db'
             }
         }
 

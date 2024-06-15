@@ -13,5 +13,13 @@ pipeline {
                 sh 'ls -lart'
             }
         }
+        stage('run on condition') {
+            when {
+            $Branch_Name=='main'
+            }
+            steps {
+                echo 'hey am on the main branch'
+            }
+        }
     }
 }

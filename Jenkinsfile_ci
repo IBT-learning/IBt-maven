@@ -47,5 +47,12 @@ pipeline{
 
             }
         }
+        stage('deploy using cred'){
+            steps{
+                withCredentials([file(credentialsId: 'mvn_settings_gunj', variable: 'mvn_settins_gunjan')]) {
+                    sh 'mvn deploy -s $mvn_settins_gunjan'
+                }
+            }
+        }
     } //stages
 } //pipeline

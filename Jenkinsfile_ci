@@ -29,7 +29,20 @@ pipeline{
                 '''
             }
         }
-
-
+         stage('compile'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+        stage('compile'){
+            steps{
+                sh 'mvn test'
+                }
+        }
+        stage('package'){
+            steps{
+                sh 'mvn package'
+            }
+        }
     } //stages
 } //pipeline

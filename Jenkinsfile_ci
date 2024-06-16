@@ -34,6 +34,16 @@ pipeline{
                 sh 'mvn test'
             }
         }
+        stage('Sonarqube Scan'){
+            environment {
+                scannerHome = tool 'ibt-sonarqube_5'
+            }
+            steps{
+                withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
+                  sh '${scannerHome}/bin/sonar-scanner'
+                }
+            }
+        }
         stage('package'){
             steps{
                 sh 'mvn package'

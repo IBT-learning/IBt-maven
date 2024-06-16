@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Github checkout'){
             steps{
-                git branch: '$Branch_Name', changelog: false, credentialsId: 'gunjan_git_cred', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
+                git branch: '$Branch_Name', changelog: false, credentialsId: 'ibt', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
                 //bat 'dir' // windows
                 sh 'ls -lrt' // unix
             }

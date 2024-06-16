@@ -47,6 +47,11 @@ pipeline {
                // bat 'echo %database_name%' // windows
             }
         }
+        stage('git scm polling'){
+            steps{
+                echo 'testing git scm polling'
+            }
+        }
 
     } // stages
      post {

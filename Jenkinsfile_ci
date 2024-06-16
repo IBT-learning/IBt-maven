@@ -39,5 +39,13 @@ pipeline{
                 sh 'mvn package'
             }
         }
+        stage('deploy'){
+            steps{
+                withMaven(maven: 'maven_3.9.3', mavenSettingsConfig: 'artifactory-settings') {
+                      sh 'mvn deploy'
+                }
+
+            }
+        }
     } //stages
 } //pipeline

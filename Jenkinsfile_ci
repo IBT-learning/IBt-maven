@@ -17,6 +17,16 @@ pipeline{
                 }
             }
         }
+        stage('compile'){
+            steps{
+                tool name: 'maven_3.9.3', type: 'maven'
+                sh '''
+                    mvn --version
+                    mvn compile
+                '''
+            }
+        }
+
 
     } //stages
 } //pipeline

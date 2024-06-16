@@ -19,7 +19,9 @@ pipeline{
         }
         stage('compile'){
             steps{
-                tool name: 'maven_3.9.3', type: 'maven'
+                tools {
+                    maven 'maven_3.9.3'
+                }
                 sh '''
                     mvn --version
                     mvn compile

@@ -3,13 +3,13 @@ pipeline {
     parameters{ string(name: 'Branch_Name', defaultValue: 'main', description: 'Enter a branch name:')}
     environment{
         version = '1.5.0'
-        database = 'ibt_db'
+        database_name = 'ibt_db'
     }
     stages {
         stage('Hello') {
             steps {
                 echo 'Hello World'
-                echo '$(env.version)'
+                echo '${env.version}'
             }
         }
         stage('github checkout') {

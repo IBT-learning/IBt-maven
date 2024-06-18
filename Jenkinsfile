@@ -19,7 +19,7 @@ pipeline {
                  echo '${env.database_name}'
             }
         }
-        stage('Github checkout'){
+        stage('Github connection'){
             steps{
                 git branch: '$Branch_Name', changelog: false, credentialsId: 'GodsonGitPass', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
                 //bat 'dir' // windows

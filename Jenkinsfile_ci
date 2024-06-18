@@ -9,5 +9,19 @@ pipeline {
                 url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }
+        stage('validate maven'){
+            steps{
+                withMaven(
+                maven: 'maven_3.8',
+                traceability: true
+                )
+                {
+                sh '''
+                    mvn --version
+                    mvn validate
+                    '''
+                }
+            }
+        }
     } //stages end
 } // pipeline end

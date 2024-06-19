@@ -51,17 +51,13 @@ pipeline {
                     '''
             }
         }
-        stage('deploy maven'){
-            steps{
-                withMaven(
-                maven: 'maven_3.9.3',
-                mavenSettingsConfig: 'artifactory-settings',
-                traceability: true) {
-                sh 'mvn deploy'
-                }
 
+        stage('Deploy with credentials'){
+            steps{
+                withCredentials([file(credentialsId: 'SettingXmlGodson', variable: 'mvn_setting_godson')]) {
+                sh 'mvn deploy -s $mvn_setting_godson'
+}
             }
         }
-
     } //stages end
 } // pipeline end

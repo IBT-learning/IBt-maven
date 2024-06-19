@@ -12,6 +12,11 @@ pipeline {
                 url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }
+        stage('mvn clean'){
+            steps{
+                sh 'mvn clean'
+            }
+        }
         stage('validate maven'){
             steps{
                 withMaven(

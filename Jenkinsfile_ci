@@ -67,13 +67,7 @@ pipeline {
 
             }
         }
-        stage('Deploy with credentials'){
-            steps{
-                withCredentials([file(credentialsId: 'SettingXmlGodson', variable: 'mvn_setting_godson')]) {
-                sh 'mvn deploy -s $mvn_setting_godson'
-        }
-            }
-        }
+
         stage('deploy using managed'){
             steps{
                 configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_deploy_configSetting', variable: 'mvn_deploy_configSetting')]) {

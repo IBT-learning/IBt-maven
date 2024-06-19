@@ -35,6 +35,22 @@ pipeline {
                     '''
             }
         }
+        stage('test Maven'){
+            steps{
+
+                sh '''
+                    mvn test
+                    '''
+            }
+        }
+        stage('package maven'){
+            steps{
+
+                sh '''
+                    mvn package
+                    '''
+            }
+        }
 
     } //stages end
 } // pipeline end

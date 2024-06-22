@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     parameters{ string(name: 'Branch_name', defaultValue: 'main', description: 'Enter the branch name to build')}
+    environment
+        version = '1.5.0'
     stages {
         stage("Hello") {
             steps {

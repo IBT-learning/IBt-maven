@@ -13,5 +13,14 @@ pipeline {
                 echo "Hi"
            }
         }
+        stage {'run on condition'}{
+            when {
+                expression{
+                    $Branch_name== 'main'
+                }
+            Steps{
+                echo "hey I am on main branch...""
+            }
+        }
     }
 }

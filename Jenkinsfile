@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+    parameters{ string(name: 'Branch_name', defaultValue: 'main', description: 'Enter the branch name to build')}
     stages {
         stage("Hello") {
             steps {
@@ -16,7 +17,7 @@ pipeline {
         stage {'run on condition'}{
             when {
                 expression{
-                    env.Branch_name== 'master'
+                    env.Branch_name== 'April2024_Isaac'
                 }
             Steps{
                 echo "hey I am on main branch...""

@@ -15,7 +15,7 @@ pipeline {
 
         stage('Sonaqube scan start point'){
             environment{
-                scannerHome = tool 'ibt-sonaqube_5'
+                scannerHome = tool 'ibt-sonaqube'
             }
             steps{
                 withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {

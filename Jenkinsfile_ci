@@ -1,0 +1,13 @@
+pipelne{
+    agent any
+
+    stages {
+        stage('Github checkout'){
+            steps{
+                git branch: git branch: 'April2024_Isaac', changelog: false, credentialsId: 'Dadah3227', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+        }
+        stage{}
+
+    } //stages
+} //pipeline

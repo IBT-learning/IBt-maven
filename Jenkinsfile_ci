@@ -12,6 +12,7 @@ pipeline {
                 url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }
+        }
 
         stage('Sonaqube scan start point'){
             environment{
@@ -21,6 +22,7 @@ pipeline {
                 withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
                     sh '${scannerHome"}/bin/sonar-scanner'
             }
+        }
         }
 
 
@@ -92,4 +94,3 @@ pipeline {
 
 
     }
-}

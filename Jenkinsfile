@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label 'UX_IBT'}
     parameters{ string(name: 'Branch_Name', defaultValue: 'main', description: 'ENter the branch name to build')}
     environment{
         version = '1.5.0'

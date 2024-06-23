@@ -13,17 +13,17 @@ pipeline {
             }
         }
 
-       stage('sonqube Scan start'){
-            enviroment{
-                scannerHome = tool 'ibt-sonnerqube_5'
+        stage('Sonaqube scan start point'){
+            environment{
+                scannerHome = tool 'ibt-sonaqube_5'
             }
-
             steps{
                 withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
-                sh '${scannerHome"}/bin/sonar-scanner'
-}
+                    sh '${scannerHome"}/bin/sonar-scanner'
             }
-       }
+        }
+
+
 
         stage('validate maven'){
             steps{

@@ -12,7 +12,7 @@ pipeline {
                 url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }
-        }
+
 
         stage('Sonaqube scan start point'){
             environment{
@@ -93,4 +93,5 @@ pipeline {
         }
 
 
+    }
     }

@@ -17,7 +17,7 @@ pipeline {
             enviroment{
                 scannerHome = tool 'ibt-sonnerqube_5'
             }
-       }
+
             steps{
                 withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
                 sh '${scannerHome"}/bin/sonar-scanner'

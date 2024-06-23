@@ -12,11 +12,19 @@ pipeline {
                 url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }
-        stage('mvn clean'){
-            steps{
-                sh 'mvn clean'
+
+       stage('sonqube Scan start'){
+            enviroment{
+                scannerHome = tool 'ibt-sonnerqube_5'
             }
-        }
+       }
+            steps{
+                withSonarQubeEnv(credentialsId: 'student-sonar-token', installationName: 'IBT sonarqube') {
+                sh '${scannerHome"}/bin/sonar-scanner'
+}
+            }
+       }
+
         stage('validate maven'){
             steps{
                 withMaven(
@@ -67,7 +75,13 @@ pipeline {
 
             }
         }
-
+        stage('Deploy with credentials'){
+            steps{
+                withCredentials([file(credentialsId: 'SettingXmlGodson', variable: 'mvn_setting_godson')]) {
+                sh 'mvn deploy -s $mvn_setting_godson'
+        }
+            }
+        }
         stage('deploy using managed'){
             steps{
                 configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_deploy_configSetting', variable: 'mvn_deploy_configSetting')]) {

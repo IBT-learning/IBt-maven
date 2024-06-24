@@ -44,5 +44,12 @@ pipeline{
             }
         }
     }
+        stage('deploy using cred'){
+            steps{
+                 withCredentials([file(credentialsId: 'mvn_setting_isaac', variable: 'mvn_settings_isaac')]) {
+                 sh 'mvn deploy -s $mvn_settings_isaac'
+            }
+        }
+    }
     } //stages
 } //pipeline

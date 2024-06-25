@@ -1,0 +1,4 @@
+Sonar.projectKey=April2024_cohort
+
+Sonar.java.binaries=target
+Sonar.host.url=https://sonarqube.ibtlearning.co/

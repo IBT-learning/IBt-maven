@@ -66,6 +66,19 @@ pipeline {
                     '''
             }
         }
+
+        stage('Dependency check'){
+            steps{
+                dependencyCheck additionalArguments: '''
+                    -o "./"
+                    -s "./"
+                    -f "ALL"
+                    --prettyPrint
+                    ''', odcInstallation: 'DependencyCheckGodson'
+                    dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
+
         stage('deploy maven'){
             steps{
                 withMaven(

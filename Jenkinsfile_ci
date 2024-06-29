@@ -81,5 +81,17 @@ pipeline{
                 }
             }
         }
+        stage('Deploy to Dev'){
+            steps{
+                script{
+                    def remote = [name: 'dev', host: '139.59.90.85', allowAnyHosts: true]
+                    withCredentials([usernamePassword(credentialsId: 'server-ssh-pw', passwordVariable: 'password', usernameVariable: 'user')]) {
+                        remote.user = user
+                        remote.password = password
+                        sshPut remote: remote, from: 'target/ibt-maven-9.0-SNAPSHOT.jar' , into: '/opt/tomcat/apps'
+                    }
+                }
+            }
+        }
     } //stages
 } //pipeline

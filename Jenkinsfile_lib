@@ -37,7 +37,9 @@ pipeline{
             }
         }
         stage('Sonarqube Scan'){
-            sonarScan()
+            steps{
+               sonarScan()
+            }
         }
         stage('package'){
             steps{
@@ -45,7 +47,9 @@ pipeline{
             }
         }
         stage('Dependency-check scan'){
-            DependencyCheck()
+            steps{
+                DependencyCheck()
+            }
         }
         stage('deploy'){
             steps{

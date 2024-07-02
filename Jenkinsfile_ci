@@ -22,7 +22,7 @@ pipeline {
         stage('validate maven'){
             steps{
                 withMaven(
-                maven: 'maven_3.8',
+                maven: 'maven_3.8.1',
                 traceability: true
                 )
                 {

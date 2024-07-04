@@ -91,6 +91,14 @@ pipeline{
                     }
                 }
             }
+        stage('input') {
+            steps {
+                 input message: 'click Submit to Proceed', ok: 'Submit'
+                sh '''
+                hostname
+                uname -a
+                '''
+            }
         }
    } //stages
 } //pipeline

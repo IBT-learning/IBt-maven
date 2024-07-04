@@ -80,7 +80,7 @@ pipeline{
                 }
             }
         }
-        stage ('Deploy to Dev'){
+        stage('Deploy to Dev'){
             steps{
                 script{
                     def remote = [name: 'dev', host: '143.198.1.185', allowAnyHosts: true]
@@ -91,15 +91,6 @@ pipeline{
                     }
                 }
             }
-        stage('Deploy to Prod'){
-            steps {
-                 input message: 'click Submit to Proceed', ok: 'Submit'
-                sh '''
-                hostname
-                uname -a
-                '''
-                      }
-                }
-            }
+        }
    } //stages
 } //pipeline

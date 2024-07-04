@@ -80,7 +80,7 @@ pipeline{
                 }
             }
         }
-        stage('Deploy to Dev'){
+        stage ('Deploy to Dev'){
             steps{
                 script{
                     def remote = [name: 'dev', host: '143.198.1.185', allowAnyHosts: true]

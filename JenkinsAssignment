@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools {
+         maven 'maven_3.9.3'
+        }
 
     stages{
 
@@ -21,7 +23,7 @@ pipeline {
                 mavenSettingsConfig: 'settings.xml',
                 traceability: true) {
                 sh '''
-                    maven --version
+                    mvn --version
                     mvn validate
                     '''
         }

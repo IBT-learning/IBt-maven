@@ -31,6 +31,15 @@ pipeline {
             }
         }
 
+        stage('Maven compile'){
+            steps{
+                sh '''
+                    mvn --version
+                    mvn compile
+                    '''
+            }
+        }
+
 
 
     }

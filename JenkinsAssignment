@@ -59,13 +59,16 @@ pipeline {
 
 
 
-        stage('Deploy maven with config file'){
+        stage('Maven Deploy'){
             steps{
-                withCredentials([file(credentialsId: 'settings.xml', variable: 'artifactorySettings')]) {
-                sh 'mvn deploy -s $artifactorySettings'
-}
+                withMaven(
+                maven: 'maven_3.9.1',
+                mavenSettingsConfig: 'settings.xml',
+                traceability: true) {
+                sh 'mvn deploy'
 }
             }
+        }
 
 
 

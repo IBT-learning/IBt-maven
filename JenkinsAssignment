@@ -8,7 +8,7 @@ pipeline {
         stage('Github connection'){
             steps{
                 git branch: 'april2024_godson',
-                credentialsId: '8b75227d-608c-453e-acb6-65799e36014e',
+                credentialsId: 'newTokenGit',
                 url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }

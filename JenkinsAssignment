@@ -59,9 +59,12 @@ pipeline {
 
         stage('Maven Deploy'){
             steps{
-                sh '''
-                    mvn deploy
-                    '''
+                withMaven(
+                maven: 'maven_3.9.1',
+                mavenSettingsConfig: 'settings.xml',
+                traceability: true) {
+                sh 'mvn deploy'
+}
             }
         }
 

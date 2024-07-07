@@ -68,6 +68,17 @@ pipeline {
             }
         }
 
+        stage('Deploy maven with config file'){
+            steps{
+                configFileProvider([configFile(fileId: 'settings.xml', targetLocation: 'maven_deploy_configsetting', variable: 'maven_deploy_configsetting')]) {
+                sh 'mvn deploy -s $maven_deploy_configsetting'
+}
+            }
+        }
+
+
+
+
 
     }
 }

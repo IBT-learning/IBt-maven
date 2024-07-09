@@ -57,9 +57,9 @@ pipeline {
             }
         }
 
-        stage('Deploy with credentials'){
+        stage('Deploy with Managed'){
             steps{
-                withCredentials([file(credentialsId: 'mvn_settings', variable: 'settingsFile')]) {
+                configFileProvider([configFile(fileId: 'settingsFile', targetLocation: 'settingsFile', variable: 'settingsFile')]) {
                  sh 'mvn deploy -s $settingsFile'
 }
             }

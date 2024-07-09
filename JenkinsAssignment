@@ -57,6 +57,12 @@ pipeline {
             }
         }
 
+        stage('Auth stage'){
+            steps{
+                input message: 'Click submit to proceed', ok: 'submit'
+            }
+        }
+
         stage('Deploy with Managed'){
             steps{
                 configFileProvider([configFile(fileId: 'settingsFile', targetLocation: 'settingsFile', variable: 'settingsFile')]) {

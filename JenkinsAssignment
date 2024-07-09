@@ -19,9 +19,9 @@ pipeline {
 
         stage('Maven validate'){
             steps{
-                withMaven(
+                withMaven(withMaven(
                 maven: 'maven_3.8.1',
-                mavenSettingsConfig: 'settings.xml',
+                mavenSettingsConfig: 'settingsFile',
                 traceability: true) {
                 sh '''
                     mvn --version

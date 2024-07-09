@@ -57,6 +57,14 @@ pipeline {
             }
         }
 
+        stage('Deploy with credentials'){
+            steps{
+                withCredentials([file(credentialsId: 'mvn_settings', variable: 'mvn_settings')]) {
+                 sh 'mvn deploy -s $mvn_settings'
+}
+            }
+
+        }
 
 
 

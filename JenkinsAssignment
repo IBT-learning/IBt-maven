@@ -60,7 +60,7 @@ pipeline {
         stage('Deploy with Managed'){
             steps{
                 configFileProvider([configFile(fileId: 'settingsFile', targetLocation: 'settingsFile', variable: 'settingsFile')]) {
-                 sh 'mvn deploy -s $settingsFile'
+                 sh 'mvn -s $settingsFile deploy'
 }
             }
 

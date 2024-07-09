@@ -19,7 +19,7 @@ pipeline {
 
         stage('Maven validate'){
             steps{
-                withMaven(withMaven(
+                withMaven(
                 maven: 'maven_3.8.1',
                 mavenSettingsConfig: 'settingsFile',
                 traceability: true) {
@@ -28,7 +28,7 @@ pipeline {
                     mvn validate
                     '''
         }
-            }
+                }
         }
 
         stage('Maven compile'){

@@ -69,9 +69,6 @@ pipeline {
 
         stage('Deploy with Managed'){
             steps{
-                script{
-                    echo "Project approved by $firstname"
-                }
                 configFileProvider([configFile(fileId: 'settingsFile', targetLocation: 'settingsFile', variable: 'settingsFile')]) {
                  sh 'mvn -s $settingsFile deploy'
 

@@ -59,6 +59,7 @@ pipeline {
 
         stage('Auth stage'){
             steps{
+            agent any
                 input {
                   message 'Kindly Approve'
                   ok 'Submit'

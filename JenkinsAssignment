@@ -59,7 +59,14 @@ pipeline {
 
         stage('Auth stage'){
             steps{
-                input message: 'Click submit to proceed', ok: 'submit'
+                input {
+                message 'Kindly Approve'
+                ok 'Submit'
+                parameters {
+                    string defaultValue: 'Godson', description: 'firstname', name: 'firstname', trim: true
+                    }
+}
+
             }
         }
 
@@ -67,6 +74,7 @@ pipeline {
             steps{
                 configFileProvider([configFile(fileId: 'settingsFile', targetLocation: 'settingsFile', variable: 'settingsFile')]) {
                  sh 'mvn -s $settingsFile deploy'
+                 echo "Project approved by $firstname"
 }
             }
 

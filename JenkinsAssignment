@@ -63,7 +63,7 @@ pipeline {
                     message 'Kindly Approve'
                     ok 'Submit'
                     parameters {
-                    string defaultValue: 'Godson', description: 'firstname', name: 'firstname', trim: true
+                        string defaultValue: 'Godson', description: 'firstname', name: 'firstname', trim: true
                     }
 }
 

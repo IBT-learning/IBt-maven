@@ -60,12 +60,13 @@ pipeline {
         stage('Auth stage'){
             steps{
                 input {
-                    message 'Kindly Approve'
-                    ok 'Submit'
-                    parameters {
-                        string defaultValue: 'Godson', description: 'firstname', name: 'firstname', trim: true
+                  message 'Kindly Approve'
+                  ok 'Submit'
+                  parameters {
+                    string defaultValue: 'Godson', description: 'firstname', name: 'firstname', trim: true
                     }
 }
+
 
             }
         }

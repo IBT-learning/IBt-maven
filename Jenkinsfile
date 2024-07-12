@@ -6,16 +6,15 @@ agent any
             steps{
                 echo 'Hello'
             }
-        }
-    } //stage1
+        }//stage1
 
-    stages{
         stage ('Hi'){
-            steps{
-                echo 'This is Shamrin'
-            }
-        }
-    }
+                    steps{
+                        echo 'This is Shamrin'
+                    }
+        } //stage2
 
+
+    }//stages
 
 }// pipeline

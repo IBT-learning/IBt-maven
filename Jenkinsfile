@@ -14,6 +14,11 @@ agent any
                     }
         } //stage2
 
+        stage ('Download git'){
+            steps{
+                git branch: 'main', changelog: false, credentialsId: 'my_github', poll: false, url: 'https://github.com/shamrin23/demo-git.git'
+            }
+        }//stage3
 
     }//stages
 

@@ -8,6 +8,13 @@ agent any
             }
         }
     } //stage1
+    stages{
+        stage ('Hi'){
+            steps{
+                echo "This is Shamrin"
+            }
+        }
+    }
 
 
 }// pipeline

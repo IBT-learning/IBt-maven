@@ -35,7 +35,7 @@ choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick some
 
         stage ('condition'){
             when {
-                expression{ $Branch_Name = 'main'}
+                expression{ $Branch_Name == 'main'}
             }
             steps{
                 echo 'Build on main Branch'

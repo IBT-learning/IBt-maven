@@ -31,6 +31,15 @@ choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick some
                  echo "Hello ${params.Branch_Name}"
                  echo "Choice: ${params.CHOICE}"
             }
+        } //stage 4
+
+        stage ('condition'){
+            when {
+                expression{ $Branch_Name = 'main'}
+            }
+            steps{
+                echo 'Build on main Branch'
+            }
         }
 
     }//stages

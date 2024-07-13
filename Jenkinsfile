@@ -1,7 +1,11 @@
 pipeline{
 agent any
 
-parameters { string(name: 'Branch_Name', defaultValue: 'main', description: 'Enter the branch to build') }
+parameters {
+string(name: 'Branch_Name', defaultValue: 'main', description: 'Enter the branch to build')
+choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+
+}
 
     stages{
         stage ('Hello'){
@@ -25,6 +29,7 @@ parameters { string(name: 'Branch_Name', defaultValue: 'main', description: 'Ent
         stage ('adding parameters'){
             steps{
                  echo "Hello ${params.Branch_Name}"
+                 echo "Choice: ${params.CHOICE}"
             }
         }
 

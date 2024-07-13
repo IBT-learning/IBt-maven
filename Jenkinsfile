@@ -40,6 +40,12 @@ choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick some
             steps{
                 echo 'Build on main Branch'
             }
+        } // stage 5
+
+        stage ('Next'){
+            steps{
+                echo 'Printing next'
+            }
         }
 
     }//stages

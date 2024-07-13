@@ -24,7 +24,7 @@ parameters { string(name: 'Branch_Name', defaultValue: 'main', description: 'Ent
 
         stage ('adding parameters'){
             steps{
-                echo 'env.Branch_Name'
+                 echo "Hello ${params.Branch_Name}"
             }
         }
 

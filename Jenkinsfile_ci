@@ -1,7 +1,7 @@
 pipeline{
 agent any
 
-tools{ mvn = mvn_3.8}
+tools{ maven = 'mvn_3.8'}
     stages{
         stage('Git Download'){
             steps{

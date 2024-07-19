@@ -1,0 +1,13 @@
+pipeline{
+agent any
+
+    stages{
+        stage('Git Download'){
+            steps{
+                git branch: 'feature_shammac', changelog: false, credentialsId: '299d6ea0-24ed-4fc9-a11d-6bb09bc88140', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+        }
+
+    }
+
+}

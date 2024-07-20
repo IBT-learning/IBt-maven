@@ -57,19 +57,19 @@ agent any
                                        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
             }
         }
-        /*
+
         stage('Deploy to server'){
             steps{
                 script{
-                    def remote = [name:'dev', host:'143.198.102.132', allowAnyHosts: true]
+                    def remote = [name:'dev', host:'165.22.0.174', allowAnyHosts: true]
                     withCredentials([usernamePassword(credentialsId: 'jenkins-agent-connect', passwordVariable: 'password', usernameVariable: 'user')]) {
                         remote.user = user
                         remote.password = password
-                        sshPut remote:remote, from:'target/ibt-maventestwindows-1.0-SNAPSHOT.jar', into:'opt/tomcat/webapps'
+                        sshPut remote:remote, from:'target/ibt-maven-1.0-SNAPSHOT.jar', into:'opt/tomcat/webapps'
                     }
                 }
             }
-        } */
+        }
 
 
 

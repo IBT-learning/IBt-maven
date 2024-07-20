@@ -47,19 +47,19 @@ agent any
 
             }
         } */
-        /*
+
         stage('upload to server'){
             steps{
                 script{
-                    def remote = [name: 'dev', host:'147.182.252.98', allowAnyHost: true]
-                    withCredentials([usernamePassword(credentialsId: 'my_root_droplet', passwordVariable: 'password', usernameVariable: 'user')]) {
+                    def remote = [name: 'dev', host:'146.190.124.218', allowAnyHost: true]
+                    withCredentials([usernamePassword(credentialsId: 'server-ssh-pw', passwordVariable: 'password', usernameVariable: 'user')]) {
                         remote.user = user
                         remote.password = password
-
+                        sshPut remote: remote, from: 'target/ibt-maven-1.0-SNAPSHOT.jar', into: '/opt/tomcat/webapps'
                     }
                 }
             }
-        } */
+        }
 
     }
 

@@ -81,6 +81,15 @@ pipeline{
                 }
             }
         }
+        stage('Invoke Ansible Playbook'){
+            steps{
+                ansiblePlaybook (
+                    credentialsId: 'tomcatID',
+                    inventory: 'inventory.txt',
+                    playbook: 'tomcat.yaml',
+                    disableHostKeyChecking:true)
+            }
+        }
         stage('Deploy to Dev'){
             steps{
                 script{

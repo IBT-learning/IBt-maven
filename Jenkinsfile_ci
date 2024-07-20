@@ -42,7 +42,7 @@ agent any
 
             }
         } */
-
+        /*
         stage('upload to server'){
             steps{
                 script{
@@ -54,7 +54,7 @@ agent any
                     }
                 }
             }
-        }
+        } */
 
     }
 

@@ -41,12 +41,12 @@ agent any
                     sh 'mvn deploy -s $mvn_settings_shams'
                 }
             }
-        }
+        } /*
         stage('Dependency Scan'){
             steps{
 
             }
-        }
+        } */
         /*
         stage('upload to server'){
             steps{

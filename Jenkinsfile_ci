@@ -8,11 +8,6 @@ agent any
                 git branch: 'feature_shammac', changelog: false, credentialsId: '299d6ea0-24ed-4fc9-a11d-6bb09bc88140', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
             }
         }
-        stage('clean'){
-            steps{
-                sh 'mvn clean'
-            }
-        }
         stage('validate'){
             steps{
                 withMaven(globalMavenSettingsConfig: '', jdk: '', maven: 'maven_3.9.3', mavenSettingsConfig: '', traceability: false) {
@@ -51,7 +46,7 @@ agent any
         stage('upload to server'){
             steps{
                 script{
-                    def remote = [name: 'dev', host:'146.190.124.218', allowAnyHost: true]
+                    def remote = [name: 'dev', host:'146.190.124.218', allowAnyHosts: true]
                     withCredentials([usernamePassword(credentialsId: 'server-ssh-pw', passwordVariable: 'password', usernameVariable: 'user')]) {
                         remote.user = user
                         remote.password = password

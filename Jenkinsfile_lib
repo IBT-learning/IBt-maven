@@ -1,0 +1,69 @@
+@Library('jenkins-library')_
+pipeline{
+agent any
+    tools{
+     maven 'maven_3.8'
+    }
+    stages{
+        stage('Git checkout'){
+            steps{
+                git branch: 'feature_shams', changelog: false, credentialsId: '299d6ea0-24ed-4fc9-a11d-6bb09bc88140', poll: false, url: 'https://github.com/IBT-learning/ibt-maven.git'
+            }
+        } //stage1
+        stage('Validate'){
+            steps{
+                withMaven( maven: 'maven_3.9.3') {
+                    sh 'mvn --version'
+                    sh 'mvn validate'
+                }
+            }
+        }//stage2
+        stage('compile'){
+            steps{
+                sh 'mvn --version'
+                sh 'mvn compile'
+            }
+        }//stage3
+        stage('Test'){
+            steps{
+                sh 'mvn test'
+            }
+
+         stage('SonarQube scan'){
+            steps{
+                sonarScan()
+            }
+         }
+        }//stage 4
+        stage('package'){
+            steps{
+                sh 'mvn package'
+            }
+        }//stage5
+        stage('Upload to Artifactory'){
+            steps{
+                withCredentials([file(credentialsId: 'shamrin_mvn_settings_xml', variable: 'mvn_settings_shamrin')]) {
+                    sh 'mvn deploy -s $mvn_settings_shamrin'
+                }
+            }
+        }//stage6
+        stage('upload to artifactory- configFile'){
+            steps{
+                configFileProvider([configFile(fileId: 'artifactory-settings', targetLocation: 'mvn_setting_manged', variable: 'mvn_setting_manged')]) {
+                    sh 'mvn deploy -s mvn_setting_manged'
+                }
+            }
+        }
+        stage('Dependency Scan'){
+            steps{
+                 DependencyCheck()
+            }
+        }
+
+
+
+
+
+
+    }// stages
+} //pipeline

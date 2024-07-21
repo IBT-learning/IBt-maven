@@ -33,7 +33,6 @@ agent any
             steps{
                 sonarScan()
             }
-         }
         }//stage 4
         stage('package'){
             steps{
@@ -53,17 +52,11 @@ agent any
                     sh 'mvn deploy -s mvn_setting_manged'
                 }
             }
-        }
+        } //stage7
         stage('Dependency Scan'){
             steps{
                  DependencyCheck()
             }
-        }
-
-
-
-
-
-
-    }// stages
+        } //stage9
+    }//stages
 } //pipeline
